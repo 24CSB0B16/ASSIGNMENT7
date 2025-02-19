@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>Add Movie</title>
+<style>
+body {
+  background-image: url("a7i1");
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+h1 {
+  font-family: "Lucida Handwriting", cursive;
+}
+.button {
+  background-color: violet;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: black;
+  color: white;
+}
+</style>
+</head>
+<body>
+<center>
+<h1> .</h1>
+<h1> MOVIES</h1>
+<h2> ENTER THE MOVIE NAME</h2>
+<button type="button" onclick="func()" class="button">ADD MOVIE</button>
+<p id="movies"></p>
+
+<script>
+const a = [];
+
+function func() {
+  for (let i = 0; i < 2; i++) {
+    const movie = prompt("Enter the name of the movie:");
+    if (movie) {
+      a.push(movie);
+      document.getElementById("movies").innerHTML = "Movies: " + a.join(", ");
+    }
+  }
+}
+</script>
+<button type="button" onclick="func1()" class="button">DELETE LIST</button>
+<script>
+function func1(){
+  a.splice(0);
+  document.getElementById("movies").innerHTML = "Movies: " + a.join(", ");
+  console.log("MOVIES:", a);
+}
+</script>
+</center>
+</body>
+</html>
