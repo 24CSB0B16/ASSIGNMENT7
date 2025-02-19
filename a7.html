@@ -38,28 +38,32 @@ h1 {
 <h2> ENTER THE MOVIE NAME</h2>
 <button type="button" onclick="func()" class="button">ADD MOVIE</button>
 <p id="movies"></p>
+<p id="count"></p> <!-- Display movie count -->
 
 <script>
 const a = [];
+
+function updateDisplay() {
+  document.getElementById("movies").innerHTML = "Movies: " + (a.length > 0 ? a.join(", ") : "No movies added");
+  document.getElementById("count").innerHTML = "Total Movies: " + a.length;
+}
 
 function func() {
   for (let i = 0; i < 2; i++) {
     const movie = prompt("Enter the name of the movie:");
     if (movie) {
       a.push(movie);
-      document.getElementById("movies").innerHTML = "Movies: " + a.join(", ");
+      updateDisplay();
     }
   }
 }
-</script>
-<button type="button" onclick="func1()" class="button">DELETE LIST</button>
-<script>
 function func1(){
   a.splice(0);
-  document.getElementById("movies").innerHTML = "Movies: " + a.join(", ");
-  console.log("MOVIES:", a);
+  updateDisplay();
 }
 </script>
+
+<button type="button" onclick="func1()" class="button">DELETE LIST</button>
 </center>
 </body>
 </html>
