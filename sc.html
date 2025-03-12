@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        header {
+            padding: 15px;
+            color: white;
+            margin: 0;
+            background-color: dodgerblue;
+            text-align: center;
+        }
+
+        marquee {
+            color: black;
+            background-color: yellow;
+            padding: 10px;
+        }
+
+        body {
+            color: black;
+            background-color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        main {
+            display: flex;
+            justify-content: space-around;
+            padding: 50px;
+        }
+
+        .product {
+            text-align: center;
+        }
+
+        .product img {
+            width: 150px;
+            height: 150px;
+        }
+
+        button {
+            background-color: rgb(192, 22, 107);
+            color: white;
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: blue;
+        }
+
+        .cart {
+            padding: 20px;
+            background-color: #f0f0f0;
+            margin-top: 30px;
+        }
+
+        #cart-items {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #cart-items li {
+            padding: 10px;
+            background-color: #e0e0e0;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        #clear-cart {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #clear-cart:hover {
+            background-color: darkred;
+        }
+        .dark-mode{
+            background-color:black;
+            color:darkmagenta;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        .butbg{
+            background-color: red;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        .change{
+            background-color:rgb(247, 87, 113);
+        }
+    </style>
+</head>
+<body>
+    <header>SHOPPING CART</header>
+    <marquee> TODAY EVERY PRODUCT IS ON 20% OFF </marquee>
+    <div class="topnav">
+        <input type="text" placeholder="Search...">
+    </div>
+    <p>
+        <table>
+            <tr>
+                <td><button>ACCOUNT</button></td>
+                <td><button>MY ORDERS</button></td>
+                <td><button>SPECIAL OFFERS</button></td>
+                <td><button>CUSTOMER SERVICE</button></td>
+                <td><button>NEW RELEASES</button></td>
+                <td><button>RETURN</button></td>
+                <td><button onclick="toggle()">LIGHT/DARK MODE </button></td>
+            </tr>
+        </table>
+    </p>
+    <main>
+        <div class="product" id="product1">
+            <img src="sci1.jfif" alt="Shoe">
+            <p>PRODUCT: SHOE</p>
+            <p>PRICE: 1100/-</p>
+            <button class="add-to-cart" data-id="1" data-name="Shoe" data-price="1100" data-image="sci1.jfif">ADD TO CART</button>
+        </div>
+        <div class="product" id="product2">
+            <img src="sci2.jpg" alt="Watch">
+            <p>PRODUCT: WATCH</p>
+            <p>PRICE: 3500/-</p>
+            <button class="add-to-cart" data-id="2" data-name="Watch" data-price="3500" data-image="sci2.jpg">ADD TO CART</button>
+        </div>
+        <div class="product" id="product3">
+            <img src="sci3.webp" alt="Dress">
+            <p>PRODUCT: DRESS</p>
+            <p>PRICE: 999/-</p>
+            <button class="add-to-cart" data-id="3" data-name="Dress" data-price="999" data-image="sci3.webp">ADD TO CART</button>
+        </div>
+        <div class="product" id="product4">
+            <img src="sci4.avif" alt="Air Conditioner">
+            <p>PRODUCT: LG 3 STAR (1.5)</p>
+            <p>PRICE: 48,490/-</p>
+            <button class="add-to-cart" data-id="4" data-name="LG 3 STAR (1.5)" data-price="48490" data-image="sci4.avif">ADD TO CART</button>
+        </div>
+        <div class="product" id="product5">
+            <img src="sci5.jpg" alt="Sun Glasses">
+            <p>PRODUCT: SUN GLASSES</p>
+            <p>PRICE: 799/-</p>
+            <button class="add-to-cart" data-id="5" data-name="Sun Glasses" data-price="799" data-image="sci5.jpg">ADD TO CART</button>
+        </div>
+        <div class="product" id="product6">
+            <img src="sci63.jpg" alt="Backpack">
+            <p>PRODUCT: BACKPACK</p>
+            <p>PRICE: 5700/-</p>
+            <button class="add-to-cart" data-id="6" data-name="Backpack" data-price="5700" data-image="sci63.jpg">ADD TO CART</button>
+        </div>
+    </main>
+
+    <div class="cart">
+        <h2>Shopping Cart</h2>
+        <ul id="cart-items">
+         </ul>
+        <button id="clear-cart">Clear Cart</button>
+    </div>
+
+
+<div class="cart">
+        <h2>Shopping Cart</h2>
+        <ul id="cart-items">
+         </ul>
+        <button id="clear-cart">Clear Cart</button>
+        <button id="sort-cart">Sort Alphabetically</button>
+        <button id="reverse-cart">Reverse Order</button>
+        <button id="filter-duplicates">Filter Duplicates</button>
+    </div>
+
+    <script>
+        class Product {
+            constructor(id, name, price, image) {
+                this.id = id;
+                this.name = name;
+                this.price = price;
+                this.image = image;
+            }
+        }
+
+        class Cart {
+            constructor() {
+                this.items = [];
+                this.date = new Date();
+            }
+
+            addItem(product) {
+                if (!this.items.some(item => item.id === product.id)) {
+                    this.items.push(product);
+                }
+            }
+
+            removeItem(id) {
+                this.items = this.items.filter(item => item.id !== id);
+            }
+
+            clearCart() {
+                this.items = [];
+            }
+
+            displayCart() {
+                const cartItemsContainer = document.getElementById("cart-items");
+                cartItemsContainer.innerHTML = '';
+                this.items.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" style="width:50px;height:50px;">
+                        ${item.name} - ${item.price} 
+                        <button class="remove-item" data-id="${item.id}">Remove</button>
+                    `;
+                    cartItemsContainer.appendChild(li);
+                });
+
+                document.querySelectorAll(".remove-item").forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        this.removeItem(id);
+                        this.displayCart();
+                    });
+                });
+            }
+            sortCart() {
+                this.items.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            
+            reverseCart() {
+                this.items.reverse();
+            }
+
+            filterDuplicates() {
+                this.items = this.items.filter((item, index, self) => 
+                    index === self.findIndex((t) => t.id === item.id)
+                );
+            }
+        }
+
+        const cart = new Cart();
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const id = e.target.getAttribute('data-id');
+                const name = e.target.getAttribute('data-name');
+                const price = parseInt(e.target.getAttribute('data-price'));
+                const image = e.target.getAttribute('data-image');
+
+                const product = new Product(id, name, price, image);
+                cart.addItem(product);
+
+                cart.displayCart();
+            });
+        });
+
+        
+        document.getElementById('clear-cart').addEventListener('click', () => {
+            cart.clearCart();
+            cart.displayCart();
+        });
+
+        document.getElementById('sort-cart').addEventListener('click', () => {
+            cart.sortCart();
+            cart.displayCart();
+        });
+
+
+        document.getElementById('reverse-cart').addEventListener('click', () => {
+            cart.reverseCart();
+            cart.displayCart();
+        });
+
+    
+        document.getElementById('filter-duplicates').addEventListener('click', () => {
+            cart.filterDuplicates();
+            cart.displayCart();
+        });
+
+        function toggle() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+            var buttons = document.querySelectorAll("button");
+            buttons.forEach(button => {
+                button.classList.toggle("butbg");
+            });
+            var element1 = document.querySelectorAll("header");
+            element1.forEach(header => {
+                header.classList.toggle("change");
+            });
+        }
+    </script>
+</body>
+</html>
